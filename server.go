@@ -15,8 +15,9 @@ type Message struct {
 func main() {
 	m := martini.Classic()
 
-	m.Use(render.Renderer())
-
+	m.Use(render.Renderer(render.Options{
+		Layout: "layout",
+	}))
 	m.Get("/", ctrl.IndexView)
 	m.Post("/save", binding.Bind(Message{}), func(msg Message, r render.Render) string {
 		return msg.Content
