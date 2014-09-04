@@ -3,6 +3,7 @@ package main
 import (
 	"log"
 	"net/http"
+	ctrl "oncemsg/controls"
 	"os"
 
 	"github.com/codegangsta/martini-contrib/binding"
@@ -16,19 +17,20 @@ type ViewMessage struct {
 
 func main() {
 	m := martini.Classic()
-	/*
-		err := http.ListenAndServe(":"+os.Getenv("PORT"), m)
-		if err != nil {
-			panic(err)
-		}*/
 	m.Use(render.Renderer(render.Options{
 		Layout: "layout",
 	}))
+
 	m.Get("/", func(r render.Render) {
 		r.HTML(200, "index", "")
 	})
 	m.Post("/u", binding.Bind(ViewMessage{}), func(msg ViewMessage, r render.Render) string {
-		return msg.Content
+		str, err := ctrl.SaveMsg(msg.Content, "text")
+		if err != nil {
+			r.HTML(404, "", "")
+		}
+		return str
 	})
+
 	log.Fatal(http.ListenAndServe(":"+os.Getenv("PORT"), m))
 }
