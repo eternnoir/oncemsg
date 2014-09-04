@@ -6,5 +6,6 @@ func IndexView(r render.Render) {
 	r.HTML(200, "index", "")
 }
 
-func ResutlView(r render.Render) {
+func ResutlView(msgContent string) {
+
 }
