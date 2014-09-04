@@ -25,7 +25,7 @@ func main() {
 		r.HTML(200, "index", "")
 	})
 	m.Post("/u", binding.Bind(ViewMessage{}), func(msg ViewMessage, r render.Render) string {
-		str, err := ctrl.SaveMsg(msg.Content)
+		str, err := ctrl.SaveMsg(msg.Content, "text")
 		if err != nil {
 			r.HTML(404, "", "")
 		}
