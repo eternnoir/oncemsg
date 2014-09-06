@@ -25,17 +25,28 @@ func main() {
 	m.Get("/", func(r render.Render) {
 		r.HTML(200, "index", "")
 	})
-	m.Post("/u", binding.Bind(ViewMessage{}), func(msg ViewMessage, r render.Render) string {
+	m.Post("/u", binding.Bind(ViewMessage{}), func(msg ViewMessage, r render.Render, req *http.Request) {
+		hosturl := os.Getenv("URL")
 		str, err := ctrl.SaveMsg(msg.Content, "text")
 		if err != nil {
-			r.HTML(404, "", "")
+			r.HTML(404, "error", "")
+			return
 		}
-		return str
+		r.HTML(200, "url", hosturl+"/r/"+str)
 	})
 
 	m.Get("/r/:unid", func(params martini.Params, r render.Render) {
 		unid := params["unid"]
-
+		msg, err := ctrl.GetSecMsg(unid)
+		if err != nil {
+			r.HTML(404, "error", "")
+			return
+		}
+		if msg == nil {
+			r.HTML(404, "error", "")
+			return
+		}
+		r.HTML(200, "read", msg.Content)
 	})
 
 	log.Fatal(http.ListenAndServe(":"+os.Getenv("PORT"), m))
