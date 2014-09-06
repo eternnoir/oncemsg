@@ -18,6 +18,14 @@ func SaveMsg(msg, Type string) (string, error) {
 	return uniString, nil
 }
 
+func GetSecMsg(uniId string) (*db.SceMessage, error) {
+	msg := db.GetSceMessage(uniId)
+	if msg != nil {
+		db.DeleteSceMessage(uniId)
+	}
+	return msg, nil
+}
+
 func saveMsgToDb(unid, content, Type string) bool {
 	scemsg := db.CreateSceMessage(unid, content, Type)
 	return db.SaveSceMessage(scemsg)
