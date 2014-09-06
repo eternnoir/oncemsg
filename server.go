@@ -17,6 +17,7 @@ type ViewMessage struct {
 
 func main() {
 	m := martini.Classic()
+	m.Use(martini.Static("assets"))
 	m.Use(render.Renderer(render.Options{
 		Layout: "layout",
 	}))
@@ -30,6 +31,11 @@ func main() {
 			r.HTML(404, "", "")
 		}
 		return str
+	})
+
+	m.Get("/r/:unid", func(params martini.Params, r render.Render) {
+		unid := params["unid"]
+
 	})
 
 	log.Fatal(http.ListenAndServe(":"+os.Getenv("PORT"), m))
