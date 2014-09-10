@@ -1,34 +1,34 @@
 <html>
-  <head>
+<head>
 <link rel="stylesheet" type="text/css" href="/bootstrap/css/bootstrap.min.css">
-    <title>OnceMsg</title>
-  </head>
-  <body>
+<title>OnceMsg</title>
+</head>
+<body>
 
-    <div class="container">
+<div class="container">
 
-      <!-- Static navbar -->
-      <div class="navbar navbar-default" role="navigation">
+    <!-- Static navbar -->
+    <div class="navbar navbar-default" role="navigation">
         <div class="container-fluid">
-          <div class="navbar-header">
-           <a class="navbar-brand" href="/">OnceMsg</a>
-          </div>
-          <div class="navbar-collapse collapse">
-            <ul class="nav navbar-nav navbar-right">
-              <li><a href="/">About</a></li>
-            </ul>
-          </div><!--/.nav-collapse -->
+            <div class="navbar-header">
+                <a class="navbar-brand" href="/">OnceMsg</a>
+            </div>
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li><a href="/">About</a></li>
+                </ul>
+            </div><!--/.nav-collapse -->
         </div><!--/.container-fluid -->
-      </div>
+    </div>
     <!-- Render the current template here -->
     {{ yield }}
 </div>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-    <!-- Include all compiled plugins (below), or include individual files as needed -->
-    <script src="/bootstrap/js/bootstrap.min.js"></script>
-    <script src="/elastic/jquery.elastic.source.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+<!-- Include all compiled plugins (below), or include individual files as needed -->
+<script src="/bootstrap/js/bootstrap.min.js"></script>
+<script src="/elastic/jquery.elastic.source.js"></script>
 <script>
 $('.autoArea').elastic();
 </script>
-  </body>
+</body>
 </html>
