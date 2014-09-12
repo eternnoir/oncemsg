@@ -12,7 +12,7 @@ const dbName = "app29209595"
 const colName = "secmsg"
 
 func getSesseion() *mgo.Session {
-	uri := os.Getenv("MONGOLAB_URL")
+	uri := os.Getenv("MONGOLAB_URI")
 	if uri == "" {
 		fmt.Println("no connection string provided")
 		return nil
