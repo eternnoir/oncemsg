@@ -8,7 +8,7 @@ import (
 	"gopkg.in/mgo.v2/bson"
 )
 
-const dbName = "app29209595"
+const dbName = "heroku_app29209595"
 const colName = "secmsg"
 
 func getSesseion() *mgo.Session {
