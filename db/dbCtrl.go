@@ -12,7 +12,7 @@ const dbName = "app29209595"
 const colName = "secmsg"
 
 func getSesseion() *mgo.Session {
-	uri := os.Getenv("MONGOHQ_URL")
+	uri := os.Getenv("MONGOLAB_URL")
 	if uri == "" {
 		fmt.Println("no connection string provided")
 		return nil
@@ -30,6 +30,7 @@ func SaveSceMessage(msg *SceMessage) bool {
 	if sess == nil {
 		return false
 	}
+	defer sess.Close()
 	sess.SetSafe(&mgo.Safe{})
 	collection := sess.DB(dbName).C(colName)
 	err := collection.Insert(*msg)
@@ -46,6 +47,7 @@ func DeleteSceMessage(uniid string) bool {
 	if sess == nil {
 		return false
 	}
+	defer sess.Close()
 	sess.SetSafe(&mgo.Safe{})
 	collection := sess.DB(dbName).C(colName)
 	err := collection.Remove(bson.M{"unid": uniid})
@@ -62,10 +64,10 @@ func GetSceMessage(unid string) *SceMessage {
 	if sess == nil {
 		return nil
 	}
+	defer sess.Close()
 	var ret SceMessage
 	collection := sess.DB(dbName).C(colName)
 	err := collection.Find(bson.M{"unid": unid}).One(&ret)
-	sess.Close()
 	if err != nil {
 		fmt.Printf("got an error finding a doc %v\n")
 		return nil
