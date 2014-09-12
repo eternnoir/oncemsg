@@ -30,10 +30,10 @@ func SaveSceMessage(msg *SceMessage) bool {
 	if sess == nil {
 		return false
 	}
+	defer sess.Close()
 	sess.SetSafe(&mgo.Safe{})
 	collection := sess.DB(dbName).C(colName)
 	err := collection.Insert(*msg)
-	sess.Close()
 	if err != nil {
 		fmt.Printf("Can't insert document: %v\n", err)
 		return false
@@ -46,10 +46,10 @@ func DeleteSceMessage(uniid string) bool {
 	if sess == nil {
 		return false
 	}
+	defer sess.Close()
 	sess.SetSafe(&mgo.Safe{})
 	collection := sess.DB(dbName).C(colName)
 	err := collection.Remove(bson.M{"unid": uniid})
-	sess.Close()
 	if err != nil {
 		fmt.Printf("Can't remove document: %v\n", err)
 		return false
@@ -62,10 +62,10 @@ func GetSceMessage(unid string) *SceMessage {
 	if sess == nil {
 		return nil
 	}
+	defer sess.Close()
 	var ret SceMessage
 	collection := sess.DB(dbName).C(colName)
 	err := collection.Find(bson.M{"unid": unid}).One(&ret)
-	sess.Close()
 	if err != nil {
 		fmt.Printf("got an error finding a doc %v\n")
 		return nil
