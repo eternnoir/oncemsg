@@ -4,13 +4,13 @@ import (
 	"fmt"
 	"os"
 
-	"gopkg.in/mgo.v2/bson"
 	"gopkg.in/mgo.v2"
+	"gopkg.in/mgo.v2/bson"
 )
 
 const dbName = "heroku_app29209595"
 const colName = "secmsg"
-const colLog= "logmsg"
+const colLog = "logmsg"
 
 func getSesseion() *mgo.Session {
 	uri := os.Getenv("MONGOLAB_URI")

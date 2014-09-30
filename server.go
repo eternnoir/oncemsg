@@ -25,6 +25,7 @@ func main() {
 	m.Get("/", func(r render.Render) {
 		r.HTML(200, "index", "")
 	})
+
 	m.Post("/u", binding.Bind(ViewMessage{}), func(msg ViewMessage, r render.Render, req *http.Request) {
 		hosturl := os.Getenv("URL")
 		str, err := ctrl.SaveMsg(msg.Content, "text")
@@ -51,3 +52,4 @@ func main() {
 
 	log.Fatal(http.ListenAndServe(":"+os.Getenv("PORT"), m))
 }
+
