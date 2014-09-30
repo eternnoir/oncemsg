@@ -4,12 +4,13 @@ import (
 	"fmt"
 	"os"
 
-	"gopkg.in/mgo.v2"
 	"gopkg.in/mgo.v2/bson"
+	"gopkg.in/mgo.v2"
 )
 
 const dbName = "heroku_app29209595"
 const colName = "secmsg"
+const colLog= "logmsg"
 
 func getSesseion() *mgo.Session {
 	uri := os.Getenv("MONGOLAB_URI")
@@ -31,7 +32,6 @@ func SaveSceMessage(msg *SceMessage) bool {
 		return false
 	}
 	defer sess.Close()
-	sess.SetSafe(&mgo.Safe{})
 	collection := sess.DB(dbName).C(colName)
 	err := collection.Insert(*msg)
 	sess.Close()
@@ -48,7 +48,6 @@ func DeleteSceMessage(uniid string) bool {
 		return false
 	}
 	defer sess.Close()
-	sess.SetSafe(&mgo.Safe{})
 	collection := sess.DB(dbName).C(colName)
 	err := collection.Remove(bson.M{"unid": uniid})
 	sess.Close()
@@ -73,4 +72,20 @@ func GetSceMessage(unid string) *SceMessage {
 		return nil
 	}
 	return &ret
+}
+
+func SaveLogMsg(logMsg *LogMsg) bool {
+	sess := getSesseion()
+	if sess == nil {
+		return false
+	}
+	defer sess.Close()
+	collection := sess.DB(dbName).C(colLog)
+	err := collection.Insert(*logMsg)
+	sess.Close()
+	if err != nil {
+		fmt.Printf("Can't insert Log: %v\n", err)
+		return false
+	}
+	return true
 }

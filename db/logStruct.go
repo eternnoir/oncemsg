@@ -11,3 +11,10 @@ type LogMsg struct {
 	LogTime time.Time
 	Msg     string
 }
+
+func CreateLogMsg(Msg string, logTime time.Time) *LogMsg {
+	ret := &LogMsg{}
+	ret.LogTime = logTime
+	ret.Msg = Msg
+	return ret
+}
