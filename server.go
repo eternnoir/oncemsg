@@ -31,8 +31,10 @@ func main() {
 		str, err := ctrl.SaveMsg(msg.Content, "text")
 		if err != nil {
 			r.HTML(404, "error", "")
+			ctrl.LogError(err)
 			return
 		}
+		ctrl.LogInfo("NEW MSG:"+str)
 		r.HTML(200, "url", hosturl+"/r/"+str)
 	})
 
@@ -40,13 +42,16 @@ func main() {
 		unid := params["unid"]
 		msg, err := ctrl.GetSecMsg(unid)
 		if err != nil {
+			ctrl.LogError(err)
 			r.HTML(404, "error", "")
 			return
 		}
 		if msg == nil {
+			ctrl.LogWarn("NO MSG")
 			r.HTML(404, "error", "")
 			return
 		}
+		ctrl.LogInfo("Get MSG: "+unid)
 		r.HTML(200, "read", msg.Content)
 	})
 
