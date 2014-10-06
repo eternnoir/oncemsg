@@ -13,7 +13,8 @@ const colName = "secmsg"
 const colLog = "logmsg"
 
 func getSesseion() *mgo.Session {
-	uri := os.Getenv("MONGOLAB_URI")
+	dbTypeStr :=  os.Getenv("DB_TYPE")
+	uri := os.Getenv(dbTypeStr)
 	if uri == "" {
 		fmt.Println("no connection string provided")
 		return nil
