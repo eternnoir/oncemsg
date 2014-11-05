@@ -7,11 +7,12 @@ import (
 )
 
 type SceMessage struct {
-	Id         bson.ObjectId `bson:"_id"`
-	UnId       string
-	Content    string `bson:"msg"`
-	Type       string
-	CreateDate time.Time
+	Id          bson.ObjectId `bson:"_id"`
+	UnId        string
+	Content     string `bson:"msg"`
+	Type        string
+	ExpiredDate time.Time
+	CreateDate  time.Time
 }
 
 func CreateSceMessage(Unid, Content, Type string) *SceMessage {

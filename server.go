@@ -18,8 +18,10 @@ type ViewMessage struct {
 func main() {
 	m := martini.Classic()
 	m.Use(martini.Static("assets"))
+
 	m.Use(render.Renderer(render.Options{
-		Layout: "layout",
+		Layout:     "layout",
+		Extensions: []string{".html"},
 	}))
 
 	m.Get("/", func(r render.Render) {
@@ -34,7 +36,7 @@ func main() {
 			ctrl.LogError(err)
 			return
 		}
-		ctrl.LogInfo("NEW MSG:"+str)
+		ctrl.LogInfo("NEW MSG:" + str)
 		r.HTML(200, "url", hosturl+"/r/"+str)
 	})
 
@@ -51,10 +53,9 @@ func main() {
 			r.HTML(404, "error", "")
 			return
 		}
-		ctrl.LogInfo("Get MSG: "+unid)
+		ctrl.LogInfo("Get MSG: " + unid)
 		r.HTML(200, "read", msg.Content)
 	})
 
 	log.Fatal(http.ListenAndServe(":"+os.Getenv("PORT"), m))
 }
-
