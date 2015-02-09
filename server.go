@@ -1,14 +1,14 @@
 package main
 
 import (
-	"log"
-	"net/http"
-	ctrl "oncemsg/controls"
-	"os"
-
 	"github.com/codegangsta/martini-contrib/binding"
 	"github.com/go-martini/martini"
 	"github.com/martini-contrib/render"
+	"log"
+	"net/http"
+	ctrl "oncemsg/controls"
+	"oncemsg/utility"
+	"os"
 )
 
 type ViewMessage struct {
@@ -53,7 +53,8 @@ func main() {
 			return
 		}
 		ctrl.LogInfo("Get MSG: " + unid)
-		r.HTML(200, "read", msg.Content)
+		demsg, _ := utility.DeCryAse(msg.Content)
+		r.HTML(200, "read", demsg)
 	})
 
 	log.Fatal(http.ListenAndServe(":"+os.Getenv("PORT"), m))

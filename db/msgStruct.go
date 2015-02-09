@@ -2,6 +2,7 @@ package db
 
 import (
 	"gopkg.in/mgo.v2/bson"
+	"oncemsg/utility"
 	"time"
 )
 
@@ -17,13 +18,9 @@ type SceMessage struct {
 func CreateSceMessage(Unid, Content, Type string) *SceMessage {
 	ret := &SceMessage{}
 	ret.UnId = Unid
-	ret.Content = Content
+	ret.Content, _ = utility.CryAse(Content)
 	ret.Type = Type
 	ret.Id = bson.NewObjectId()
 	ret.CreateDate = time.Now()
 	return ret
-}
-
-func cryptoMsg(msg string) string {
-	return ""
 }
