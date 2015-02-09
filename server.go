@@ -18,7 +18,6 @@ type ViewMessage struct {
 func main() {
 	m := martini.Classic()
 	m.Use(martini.Static("assets"))
-
 	m.Use(render.Renderer(render.Options{
 		Layout:     "layout",
 		Extensions: []string{".html"},
